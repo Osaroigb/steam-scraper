@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Scrapy</title>
+
+        <!--Personal styles-->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+
+        <!--Favicon-->
+        <link rel="icon" href="{{url_for('static', filename='crawler.png')}}">
+
+        <!--Google Fonts-->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat&display=swap"
+              rel="stylesheet">
+    </head>
+
+    <body>
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white-50">
+        <div class="container-fluid">
+
+          <a class="navbar-brand" href="/">Steam Games</a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </nav>
+
+      <div class="container mt-4 text-center">
+           <div class="jumbotron">
+             <h1 class="display-4">Steam TOP 100 Games</h1>
+             <p class="lead">All the games you see below are scraped from Steam store using Scrapy and ScrapyRT.</p>
+             <hr class="my-4">
+             <p>To display the extracted data kindly click the button below.</p>
+             <form action="{{url_for('home')}}" method="post">
+                <button type="submit" class="btn btn-primary btn-lg">Scrape</button>
+             </form>
+           </div>
+      </div>
+
+      <div class="container">
+      {% for game in games: %}
+
+        {% if loop.index0 % 3 == 0: %}
+            <div class="row justify-content-center mt-4 mb-4">
+        {% endif %}
+-
+            <div class="card mr-4 text-center" style="width: 18rem;">
+              <img src="{{ game.img_url }}" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{ game.game_name }}</h5>
+                <p class="card-text">Supported platforms: {{ game.platform }}</p>
+                <a href="{{ game.game_url }}" class="btn btn-primary">Game URL</a>
+              </div>
+            </div>
+
+        {% if loop.index0 % 3 == 2: %}
+            </div>
+        {% endif %}
+
+      {% endfor %}
+      </div>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          <p>{{ messages[0] }}</p>
+      {% endif %}
+      {% endwith %}
+
+      <footer class="footer py-4 bg-dark text-white-50">
+        <div class="container text-center">
+          <span class="text-muted"><a href="https://www.linkedin.com/in/osaro-igbinovia-32613b205/" target="_blank">LinkedIn</a></span>
+          <span class="text-muted"><a href="https://www.instagram.com/osaroigb/" target="_blank">Instagram</a></span>
+          <span class="text-muted"><a href="https://github.com/Osaroigb" target="_blank">GitHub</a></span>
+          <span class="text-muted"><p>© 2021 Osaro Igbinovia</p></span>
+        </div>
+      </footer>
+
+    </body>
+</html>
